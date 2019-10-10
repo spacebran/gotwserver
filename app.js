@@ -5,6 +5,8 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var csv = require('fast-csv');
+var fs = require('fs');
 
 var app = express();
 
@@ -34,3 +36,7 @@ app.use(function(err, req, res, next) {
 });
 
 module.exports = app;
+
+fs.createReadStream('test.csv')
+  .pipe(csv.parse({ headers: true }))
+  .on('data', row => console.log(row));
