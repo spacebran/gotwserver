@@ -3,15 +3,17 @@
     <% include ../partials/head %>
   </head>
   <body class="container">
-      <% include ../partials/header %>
+    <% include ../partials/header %>
     <!-- Page Content -->
     <div class="container">
       <div class="card border-0 shadow my-5">
         <div class="card-body p-4">
-          <h1 class="font-weight-bold text-center">Guardians of the Wanderers</h1>
-          <br><br>
+          <h1 class="font-weight-bold text-center">
+            Guardians of the Wanderers
+          </h1>
+          <br /><br />
 
-          <h3 class="font-weight-heavy">Mr. Lim Kim Hock </h3>
+          <h3 class="font-weight-heavy"><%= escapee %></h3>
           <!-- <p class="lead">Mr. Lim Kim Hock </p> -->
           <div style="height: 300px"></div>
         </div>
@@ -32,6 +34,29 @@
       src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
       integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
       crossorigin="anonymous"
-    ></script>
+    >
+
+
+      var mqtt = require("mqtt");
+
+      var client = mqtt.connect("mqtt://broker.mqtt.dashboard.com", {
+        port: 8000,
+        clientId: "clientId-Qsff58vb4M"
+      });
+
+      var uuid = "";
+      client.on("connect", function() {
+        console.log("Successfully connect to mqtt");
+        // subscribe to a topic
+        client.subscribe("gotw/warn", function(err) {
+          console.log("Successfully subscribe to topic");
+          // when a message arrives, do something with it
+          client.on("message", function(topic, message, packet) {
+            console.log("Received '" + message + "' on '" + topic + "'");
+            uuid = message;
+          });
+        });
+      });
+    </script>
   </body>
 </html>
