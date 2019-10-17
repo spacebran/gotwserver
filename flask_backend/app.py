@@ -3,16 +3,14 @@ import mysql.connector as mc
 
 app = flask.Flask(__name__)
 
-"""
-create table if not exists logs(id integer auto_increment primary key,  uuid varchar(50), name varchar(50), timestamp varchar(50));
-"""
-
 def insert(uuid, name, timestamp):
     conn = mc.connect(user="root", password="", host="127.0.0.1", database="iot")
     cursor = conn.cursor(dictionary=True) 
     query = f"INSERT INTO logs(uuid, name, timestamp) VALUES('{uuid}', '{name}', '{timestamp}');"
     cursor.execute(query) 
     conn.commit()
+    conn.close()
+    cursor.close()
 
 @app.route("/")
 def _():
