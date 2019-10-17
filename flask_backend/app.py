@@ -39,4 +39,4 @@ def add_():
         return flask.jsonify({"status":"failure", "error":str(err)})
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()
