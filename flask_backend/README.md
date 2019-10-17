@@ -6,5 +6,5 @@ What the flask app does:
 
 HOW TO RUN:
 1. cd into flask_backend
-2. pip install mysql-connector-python flask (if you havent already)
+2. pip install mysql-connector-python flask flask-cors (if you havent already)
 3. py app.py

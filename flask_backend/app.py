@@ -1,7 +1,9 @@
 import flask
+from flask_cors import CORS
 import mysql.connector as mc
 
 app = flask.Flask(__name__)
+CORS(app)
 
 def insert(uuid, name, timestamp):
     conn = mc.connect(user="root", password="", host="127.0.0.1", database="iot")
