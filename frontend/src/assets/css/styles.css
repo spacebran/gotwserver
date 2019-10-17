@@ -1,0 +1,197 @@
+@charset "UTF-8";
+/* CSS Document */
+
+/* Fixed Background Image */
+body {
+    font-family: "Roboto", sans-serif;
+    background: #ecf8fe url("../images/splash_bg.jpg") no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+/* Navbar */
+.navbar {
+    margin-top: 30px;
+}
+
+.navbar a {
+    font-size: 20px;
+    font-weight: 700;
+    color: #7532d3;
+}
+
+.navbar a:hover {
+    font-size: 20px;
+    font-weight: 700;
+    color: #5e27aa;
+}
+
+.navbar {
+    margin-left:100px;
+}
+
+.ml-auto {
+    margin-right:100px;
+}
+
+.nav-item {
+    margin-right:20px;
+    margin-left:20px;
+}
+
+/* Main Content */
+.container {
+    height:100%;
+}
+
+.row_splash {
+    margin-top:120px;
+    max-width: 500px;
+}
+
+.headline {
+    font-size: 42px;
+    font-weight: 700;
+    line-height: 110%;
+    color: #424242;
+    margin-bottom: 25px;
+}
+
+.subheadline {
+    font-size: 20px;
+    font-weight: 300;
+    line-height: normal;
+    color: #424242;
+    margin-bottom: 30px;
+}
+
+/* Login Pop-up */
+.modal-title {
+    color: #424242;
+}
+
+.cta {
+    font-size: 15px;
+    font-weight: 300;
+    line-height: normal;
+    color: #424242;
+}
+
+.cta a {
+    font-weight: 700;
+    text-decoration: underline;
+    color: #7532d3;
+}
+
+.cta a:hover {
+    font-weight: 700;
+    text-decoration: underline;
+    color: #5e27aa;
+}
+
+input[type="text"],
+select.form-control {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid #cecfd0;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  border-radius: 0;
+}
+
+input[type="text"]:focus,
+select.form-control:focus {
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+input[type="password"],
+select.form-control {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid #cecfd0;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  border-radius: 0;
+}
+
+input[type="password"]:focus,
+select.form-control:focus {
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+.form-group {
+    width: 80%;
+}
+
+.form-group > label {
+  text-transform: uppercase;
+  font-size: 11px;
+  color: #a1a2a3;
+  -webkit-transform-origin: 0 0;
+          transform-origin: 0 0;
+  -webkit-transform: scale(1.4);
+          transform: scale(1.4);
+  pointer-events: none;
+  position: relative;
+  z-index: 5;
+}
+.form-group > input {
+  width: 100%;
+}
+
+.form-group > label {
+  transition: -webkit-transform 0.4s;
+  transition: transform 0.4s;
+  transition: transform 0.4s, -webkit-transform 0.4s;
+  -webkit-transform-origin: 0 0;
+          transform-origin: 0 0;
+  -webkit-transform: scale(1.4) translateY(20px);
+          transform: scale(1.4) translateY(20px);
+}
+.form-group.not-empty > label {
+  -webkit-transform: none;
+  transform: none;
+}
+
+.form-control,
+.form-control:focus,
+.form-control:focus:hover {
+  color: #7532d3 !important;
+  background: none;
+  outline: none;
+}
+
+.form-control:focus,
+.form-control:focus:hover {
+  border-bottom: 1px solid #7532d3 !important;
+}
+
+.fa-lock, .fa-user {
+    color:#a1a2a3;
+    margin-right:8px;
+}
+
+.otp-input {
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    font-size: 18px;
+    color:#7532d3;
+}
+
+/* Buttons*/
+.btn-primary, .btn-primary:active, .btn-primary:visited {
+    background-color: #7532d3 !important;
+    border-color: #7532d3 !important;
+    padding-bottom: 9px !important;
+}
+
+.btn-primary:hover {
+    background-color: #5e27aa !important;
+    border-color: #5e27aa !important;
+    padding-bottom: 9px !important;
+}

@@ -7,7 +7,6 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var csv = require('fast-csv');
 var fs = require('fs');
-
 var app = express();
 
 /* --- Setup: View engine --- */
@@ -27,9 +26,6 @@ app.use(function(req, res, next) {
   next(createError(404));
 });
 
-var mqtt = require('./routes/mqtt')
-app.use('/mqtt', mqtt )
-
 /* --- Regular error handling --- */
 app.use(function(err, req, res, next) {
   res.locals.message = err.message;
@@ -37,6 +33,8 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500); // Rendering error page
   res.render('pages/error');
 });
+
+
 
 app.listen(3000);
 console.log('App is running on port 3000');

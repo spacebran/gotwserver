@@ -13,7 +13,7 @@
           </h1>
           <br /><br />
 
-          <h3 class="font-weight-heavy"><%= escapee %></h3>
+          <h3 class="font-weight-heavy"></h3>
           <!-- <p class="lead">Mr. Lim Kim Hock </p> -->
           <div style="height: 300px"></div>
         </div>
@@ -34,28 +34,41 @@
       src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
       integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
       crossorigin="anonymous"
-    >
-
-
+    ></script>
+    <script>
       var mqtt = require("mqtt");
 
-      var client = mqtt.connect("mqtt://broker.mqtt.dashboard.com", {
+      var broker_url = "mqtt://broker.mqtt.dashboard.com";
+      var connection_options = {
         port: 8000,
-        clientId: "clientId-Qsff58vb4M"
+        // clientId: "clientId-Qsff58vb4M"
+        clientId: "gotwbackendmqttgate"
+      };
+
+      // connect to a
+      var client = mqtt.connect(broker_url, connection_options);
+
+      // on successful connection
+      client.on("connect", function() {
+        // subscribe to a topic
+        client.subscribe("gotw/warn", { qos: 2 }, function(err, granted) {
+          if (!err) {
+            console.log("Successfully subscribe to topic:'gotw/warn'");
+          } else {
+            console.log(err);
+          }
+        });
+        if (!err) {
+          client.publish("gotw/webapp", "webapp mqtt client online");
+          console.log("webapp mqtt client online!");
+        } else {
+          console.log(err);
+        }
       });
 
-      var uuid = "";
-      client.on("connect", function() {
-        console.log("Successfully connect to mqtt");
-        // subscribe to a topic
-        client.subscribe("gotw/warn", function(err) {
-          console.log("Successfully subscribe to topic");
-          // when a message arrives, do something with it
-          client.on("message", function(topic, message, packet) {
-            console.log("Received '" + message + "' on '" + topic + "'");
-            uuid = message;
-          });
-        });
+      // on receiving message
+      client.on("message", function(topic, message) {
+        console.log(message.toString());
       });
     </script>
   </body>

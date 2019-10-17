@@ -3,9 +3,10 @@ var router = express.Router();
 
 /* GET home page. */
 router.get("/", function(req, res, next) {
-  res.render("pages/index", {
-    escapee: "Liu Zuo Lin"
-  });
+  // res.render("pages/index", {
+  //   escapee: "Liu Zuo Lin"
+  // });
+  res.render("pages/index");
 });
 
 module.exports = router;
