@@ -1,13 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import * as $ from 'jquery';
-import { Router } from '@angular/router';
-import { environment } from '../../environments/environment'
-import { DataService } from '../service/data.service';
-import * as mqtt from 'mqtt';
-import { MqttConnection } from '../service/mqtt-connection'
 import { Paho } from '../ng2-mqtt/mqttws31';
-// import { Paho } from 'paho-mqtt'
-import { IMqttServiceOptions } from 'ngx-mqtt';
+import { DataService } from '../service/data.service';
 
 @Component({
   selector: 'app-splash',
@@ -16,23 +9,26 @@ import { IMqttServiceOptions } from 'ngx-mqtt';
 })
 export class SplashComponent implements OnInit {
   client: any;
+  name: string;
+  nameList: string[] = [];
+  clientDetails: any;
+  showName: boolean = false;
 
-  constructor() { }
+  constructor(private dataService: DataService) { }
 
   ngOnInit() {
-    
+    this.clientDetails = {
+      "F7826DA6-4FA2-4E98-8024-BC5B71E0893E": "Koh Pee Peng "
+    }
     this.client = new Paho.MQTT.Client('broker.hivemq.com', Number(8000), '/mqtt', 'clientId-Qsff58vb4M');
-
-
     this.onMessage();
+
     this.onConnectionLost();
     this.client.connect({ onSuccess: this.onConnected.bind(this) });
-
   }
   onConnected() {
     console.log("Connected");
     this.client.subscribe("gotw/warn");
-    // this.sendMessage('HelloWorld');
   }
 
   sendMessage(message: string) {
@@ -41,10 +37,35 @@ export class SplashComponent implements OnInit {
     this.client.send(packet);
   }
 
+  // resetArray() {
+  //   setInterval(function() {
+  //     this.nameList.push("Hello")
+  //     console.log("reset array")
+  //   }, 1000)
+  // }
+
   onMessage() {
     this.client.onMessageArrived = (message: Paho.MQTT.Message) => {
+      this.showName = true;
+      let data: any = JSON.parse(message.payloadString);
+      this.name = this.clientDetails[data.uuid];
+      console.log(this.name)
+      if (!this.nameList.includes(this.name)) {
+        this.nameList.push(this.name)
+      } 
       console.log('Message arrived : ' + message.payloadString);
-    };
+
+      let logRequest = {
+        uuid: data.uuid,
+        name: this.name,
+        timestamp: Date.now()
+      }
+      this.dataService.logDownEscapee(logRequest).subscribe(success => {
+        console.log("Successfully log to database")
+      }, error => {
+        console.log("Unsuccessful log down to database")
+      });
+    }
   }
 
   onConnectionLost() {

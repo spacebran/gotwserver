@@ -10,16 +10,8 @@ export class DataService {
 
   constructor(private httpClient: HttpClient) { }
 
-  requestOTP(header: string) {
-    return this.httpClient.post(environment.REQUEST_OTP_URL + header, '');
-  }
-
-  loginCustomer(header: string) {
-    return this.httpClient.post(environment.LOGIN_CUSTOMER_URL + header, '');
-  }
-
-  getCustomerDetails(header: string) {
-    return this.httpClient.post(environment.GET_CUSTOMER_DETAILS + header, '');
+  logDownEscapee(req: any) {
+    return this.httpClient.get("http://3.0.102.200/"+ "add?uuid=" + req.uuid + "&name=" + req.name + "&timestamp=" + req.timestamp);
   }
 
 }
