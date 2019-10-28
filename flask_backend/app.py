@@ -1,6 +1,7 @@
 import flask
 from flask_cors import CORS
-from helper import *
+from helpers.sql_helper import *
+from helpers.telegram_helper import *
 
 app = flask.Flask(__name__)
 CORS(app)
@@ -72,6 +73,15 @@ def setWhitelist_():
     except Exception as err:
         return flask.jsonify({"status":"failure", "error":str(err)})
 
+@app.route("/api/sendTeleMessage")
+def sendTeleMessage_():
+    try:
+        args = flask.request.args
+        message = args.get("message")
+        return flask.jsonify(sendTeleMessage(message))
+
+    except Exception as err:
+        return flask.jsonify({"status":"failure","error":str(err)})
 
 if __name__ == "__main__": 
-    app.run(debug=True)
+    app.run(debug={"True":True,"False":False}[env("DEBUG")])

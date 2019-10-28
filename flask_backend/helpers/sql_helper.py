@@ -1,13 +1,5 @@
-from dotenv import load_dotenv
-import os
-
-load_dotenv()
-
-def env(key):
-    return os.getenv(key)
-
+from helpers.common import *
 import mysql.connector as mc
-
 
 def connect():
     conn = mc.connect(user=env("DB_USER"), password=env("DB_PASSWORD"), host=env("DB_HOST"), database=env("DB"))
