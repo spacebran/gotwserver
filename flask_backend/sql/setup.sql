@@ -8,4 +8,12 @@ create table if not exists logs(
     timestamp varchar(50)
 );
 
+create table if not exists buslist(
+    uuid varchar(64) primary key,
+    name varchar(64)
+);
+
+create table if not exists whitelist(
+    uuid varchar(64) primary key
+);
 
