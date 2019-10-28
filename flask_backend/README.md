@@ -103,5 +103,5 @@ GET hostname/api/setWhitelist?whitelist={uuid1},{name1};{uuid2},{name2};{uuid3},
 
 GET hostname/api/sendTeleMessage?message={message}
 
-    - sends a telegram message to GOTW WARNING
+    - sends a telegram message to the "GOTW WARNING" telegram group
 

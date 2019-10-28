@@ -8,8 +8,8 @@ def connect():
 
 def addLog(uuid, name, timestamp):
     conn, cursor = connect()
-    query = f"INSERT INTO logs(uuid, name, timestamp) VALUES('{uuid}', '{name}', '{timestamp}');"
-    cursor.execute(query) 
+    query = "INSERT INTO logs(uuid, name, timestamp) VALUES(%s, %s, %s)"
+    cursor.execute(query, (uuid, name, timestamp)) 
     conn.commit()
     conn.close()
     cursor.close()
@@ -40,13 +40,9 @@ def setWhitelist(whitelist):
     cursor.execute(query)
     conn.commit()
 
-    query = "insert into whitelist(uuid, name) values"
-    for line in whitelist:
-        uuid,name = line.split(",")
-        query += f"('{uuid}','{name}'),"
-    query = query[:-1]
+    query = "insert into whitelist(uuid, name) values (%s, %s)"
 
-    cursor.execute(query)
+    cursor.executemany(query, [i.split(",") for i in whitelist])
     conn.commit()
     conn.close()
     return {"status":"set whitelist successful", "whitelist":getWhitelist()}    
@@ -67,12 +63,9 @@ def setBuslist(buslist):
     cursor.execute(query)
     conn.commit()
 
-    query = "insert into buslist(name) values"
-    for name in buslist:
-        query += f"('{name}'),"
-    query = query[:-1]
+    query = "insert into buslist(name) values ( %s )"
 
-    cursor.execute(query)
+    cursor.executemany(query, [(i,) for i in buslist])
     conn.commit()
     conn.close()
     return {"status":"set buslist successful", "buslist":getBuslist()}
