@@ -9,11 +9,11 @@ create table if not exists logs(
 );
 
 create table if not exists buslist(
-    uuid varchar(64) primary key,
-    name varchar(64)
+    name varchar(64) primary key
 );
 
 create table if not exists whitelist(
-    uuid varchar(64) primary key
+    uuid varchar(64) primary key,
+    name varchar(64)
 );
 
