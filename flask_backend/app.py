@@ -6,20 +6,27 @@ from helpers.telegram_helper import *
 app = flask.Flask(__name__)
 CORS(app)
 
-
 @app.route("/")
 def _():
     return flask.jsonify({"hello":"world"})
 
 """ This api addes one entry to te logs table """
+
+def denied():
+    return flask.jsonify({"status":"failure","error":"access denied"})
+
 @app.route("/api/addLog")
 def addLog_():
-    args = flask.request.args
-    uuid = args.get("uuid")
-    name = args.get("name")
-    timestamp = args.get("timestamp")
-
     try:
+        args = flask.request.args
+        
+        if args["api-key"] != env("API_KEY"):
+            return denied()
+    
+        uuid = args.get("uuid")
+        name = args.get("name")
+        timestamp = args.get("timestamp")
+        
         addLog(uuid, name, timestamp)
         return flask.jsonify({
         "status":"success",
@@ -36,6 +43,10 @@ def addLog_():
 @app.route("/api/getLogs")
 def getLogs_():
     try:
+        args = flask.request.args
+        if args["api-key"] != env("API_KEY"):
+            return denied()
+            
         return flask.jsonify(getLogs())
     except Exception as err:
         return flask.jsonify({"status":"failure", "error":str(err)})
@@ -44,6 +55,10 @@ def getLogs_():
 @app.route("/api/getBuslist")
 def getBuslist_():
     try:
+        args = flask.request.args
+        if args["api-key"] != env("API_KEY"):
+            return denied()
+
         return flask.jsonify(getBuslist())
     except Exception as err:
         return flask.jsonify({"status":"failure", "error":str(err)})
@@ -52,6 +67,9 @@ def getBuslist_():
 def setBuslist_():
     try:
         args = flask.request.args
+        if args["api-key"] != env("API_KEY"):
+            return denied()
+
         buslist = [i.strip() for i in args.get("buslist").split(",")]
         return flask.jsonify(setBuslist(buslist))
     except Exception as err:
@@ -60,6 +78,10 @@ def setBuslist_():
 @app.route("/api/getWhitelist")
 def getWhitelist_():
     try:
+        args = flask.request.args
+        if args["api-key"] != env("API_KEY"):
+            return denied()
+
         return flask.jsonify(getWhitelist())
     except Exception as err:
         return flask.jsonify({"status":"failure", "error":str(err)})
@@ -68,6 +90,9 @@ def getWhitelist_():
 def setWhitelist_():
     try:
         args = flask.request.args
+        if args["api-key"] != env("API_KEY"):
+            return denied()
+
         whitelist = [i.strip() for i in args.get("whitelist").split(";")]
         return flask.jsonify(setWhitelist(whitelist))
     except Exception as err:
@@ -77,6 +102,9 @@ def setWhitelist_():
 def sendTeleMessage_():
     try:
         args = flask.request.args
+        if args["api-key"] != env("API_KEY"):
+            return denied()
+
         message = args.get("message")
         return flask.jsonify(sendTeleMessage(message))
 
