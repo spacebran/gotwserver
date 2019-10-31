@@ -5,22 +5,9 @@
         Guardians of the Wanderers
       </h3>
       <br/><br/>
+      <hr>
       <div *ngFor="let name of nameList" >
         <h1 class="font-weight-heavy name">{{name}}</h1>
-      </div>
-      <!-- <h3 class="font-weight-heavy name">{{name}}</h3> -->
-      <hr>
-      <p>List of clients currently allowed to exit</p>
-      <div *ngFor="let name of allowedList">
-        <h4>
-          {{name}}
-        </h4>
-      </div>
-      <br>
-      <p>Update list:</p>
-      <div>
-        <input type=text style="width: 500px" [(ngModel)]=updatedList placeholder="Enter IDs, separate by comma" class=user_id_text>
-        <input type=submit (click)=updateList()>
       </div>
       <div style="height: 300px"></div>
     </div>

@@ -22,7 +22,7 @@ export class SplashComponent implements OnInit {
   constructor(private dataService: DataService) { }
 
   ngOnInit() {
-    this.sendTelegram("WATCH OUT!!! " + "Koh Pee Peng" + " is trying to escape.");
+    // this.sendTelegram("WATCH OUT!!! " + "Koh Pee Peng" + " is trying to escape.");
 
     this.clientDetails = {
       "F7826DA6-4FA2-4E98-8024-BC5B71E0893E": "Koh Pee Peng "
@@ -88,24 +88,18 @@ export class SplashComponent implements OnInit {
   }
 
   getAllowedList() {
-    this.dataService.getAllowedList().subscribe(res => {
+    this.dataService.getAllowedList().subscribe((res:any) => {
       console.log(Array.of(res));
       this.allowedList = res;
     }, error => {
       console.log("getAllowedList failed. " + error)
     });
+  }
+
   sendTelegram(message: any) {
     this.dataService.sendTelegram(message).subscribe((data: any) => {
       console.log(data);
     })
-  }
-
-  updateList() {
-    this.dataService.updateAllowedList(this.updatedList).subscribe(res => {
-      this.allowedList = res;
-    }, error => {
-      console.log("getAllowedList failed. " + error)
-    });
   }
 
 }
