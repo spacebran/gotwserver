@@ -11,7 +11,8 @@ export class SplashComponent implements OnInit {
   client: any;
   name: string;
   nameList: string[] = [];
-  allowedList: string[] = ["Uncle Tom", "Uncle Dick", "Uncle Harry"]; 
+  allowedList: string[] = ["Uncle Tom", "Uncle Dick", "Uncle Harry"];
+  updatedList: string[] = [];
   clientDetails: any;
   showName: boolean = false;
 
@@ -53,8 +54,9 @@ export class SplashComponent implements OnInit {
       this.name = this.clientDetails[data.uuid];
       console.log(this.name)
       if (!this.nameList.includes(this.name)) {
-        this.nameList.push(this.name)
-      } 
+        this.nameList.push(this.name);
+      }
+      this.updatedList = this.nameList;
       console.log('Message arrived : ' + message.payloadString);
 
       let logRequest = {
@@ -74,7 +76,11 @@ export class SplashComponent implements OnInit {
     this.client.onConnectionLost = (responseObject: Object) => {
       console.log('Connection lost : ' + JSON.stringify(responseObject));
     };
+  }
 
+  updateList() {
+    // HTTP Post here to back end, send the variable updatedList
+    console.log(this.updatedList);
   }
 
 }

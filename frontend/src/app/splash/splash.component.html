@@ -16,8 +16,11 @@
           {{name}}
         </h4>
       </div>
+      <br>
+      <p>Update list:</p>
       <div>
-
+        <input type=text style="width: 500px" [(ngModel)]=updatedList placeholder="Enter IDs, separate by comma" class=user_id_text>
+        <input type=submit (click)=updateList()>
       </div>
       <div style="height: 300px"></div>
     </div>
