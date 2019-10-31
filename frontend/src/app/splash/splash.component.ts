@@ -8,6 +8,7 @@ import { HttpClient } from '@angular/common/http';
   templateUrl: './splash.component.html',
   styleUrls: ['./splash.component.css']
 })
+
 export class SplashComponent implements OnInit {
   client: any;
   name: string;
@@ -17,9 +18,6 @@ export class SplashComponent implements OnInit {
   clientDetails: any;
   showName: boolean = false;
 
-  http: HttpClient;
-  buslistURL: string = "localhost:3000/api/getBuslist";
-  updateBuslistURL: string = "localhost:3000/api/setBuslist";
 
   constructor(private dataService: DataService) { }
 
@@ -83,18 +81,20 @@ export class SplashComponent implements OnInit {
   }
 
   getAllowedList() {
-    // HTTP GET request to back end to retrieve list of currently allowed clients, assign to allowedList
-    let testAllowedList;
-    testAllowedList = this.http.get(this.buslistURL);
-    console.log(testAllowedList);
+    this.dataService.getAllowedList().subscribe(res => {
+      console.log(Array.of(res));
+      this.allowedList = res;
+    }, error => {
+      console.log("getAllowedList failed. " + error)
+    });
   }
 
   updateList() {
-    // HTTP POST here to update back end, send the variable updatedList split into array delimited by comma
-    console.log(this.updatedList.split(","));
-    let testReturnedList;
-    testReturnedList = this.http.get(this.updateBuslistURL + "?buslist=" + this.updatedList);
-    console.log(testReturnedList);
+    this.dataService.updateAllowedList(this.updatedList).subscribe(res => {
+      this.allowedList = res;
+    }, error => {
+      console.log("getAllowedList failed. " + error)
+    });
   }
 
 }
