@@ -4,12 +4,21 @@
       <h3 class="font-weight-bold text-center">
         Guardians of the Wanderers
       </h3>
-      <br /><br />
+      <br/><br/>
       <div *ngFor="let name of nameList" >
         <h1 class="font-weight-heavy name">{{name}}</h1>
       </div>
       <!-- <h3 class="font-weight-heavy name">{{name}}</h3> -->
+      <hr>
+      <p>List of clients currently allowed to exit</p>
+      <div *ngFor="let name of allowedList">
+        <h4>
+          {{name}}
+        </h4>
+      </div>
+      <div>
 
+      </div>
       <div style="height: 300px"></div>
     </div>
   </div>

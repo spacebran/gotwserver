@@ -11,6 +11,7 @@ export class SplashComponent implements OnInit {
   client: any;
   name: string;
   nameList: string[] = [];
+  allowedList: string[] = ["Uncle Tom", "Uncle Dick", "Uncle Harry"]; 
   clientDetails: any;
   showName: boolean = false;
 
@@ -26,6 +27,7 @@ export class SplashComponent implements OnInit {
     this.onConnectionLost();
     this.client.connect({ onSuccess: this.onConnected.bind(this) });
   }
+
   onConnected() {
     console.log("Connected");
     this.client.subscribe("gotw/warn");
