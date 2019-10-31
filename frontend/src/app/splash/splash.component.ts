@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Paho } from '../ng2-mqtt/mqttws31';
 import { DataService } from '../service/data.service';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-splash',
@@ -11,10 +12,14 @@ export class SplashComponent implements OnInit {
   client: any;
   name: string;
   nameList: string[] = [];
-  allowedList: string[] = ["Uncle Tom", "Uncle Dick", "Uncle Harry"];
-  updatedList: string[] = [];
+  allowedList: string[] = [];
+  updatedList: string;
   clientDetails: any;
   showName: boolean = false;
+
+  http: HttpClient;
+  buslistURL: string = "localhost:3000/api/getBuslist";
+  updateBuslistURL: string = "localhost:3000/api/setBuslist";
 
   constructor(private dataService: DataService) { }
 
@@ -24,7 +29,7 @@ export class SplashComponent implements OnInit {
     }
     this.client = new Paho.MQTT.Client('broker.hivemq.com', Number(8000), '/mqtt', 'clientId-Qsff58vb4M');
     this.onMessage();
-
+    this.getAllowedList();
     this.onConnectionLost();
     this.client.connect({ onSuccess: this.onConnected.bind(this) });
   }
@@ -56,7 +61,6 @@ export class SplashComponent implements OnInit {
       if (!this.nameList.includes(this.name)) {
         this.nameList.push(this.name);
       }
-      this.updatedList = this.nameList;
       console.log('Message arrived : ' + message.payloadString);
 
       let logRequest = {
@@ -78,9 +82,19 @@ export class SplashComponent implements OnInit {
     };
   }
 
+  getAllowedList() {
+    // HTTP GET request to back end to retrieve list of currently allowed clients, assign to allowedList
+    let testAllowedList;
+    testAllowedList = this.http.get(this.buslistURL);
+    console.log(testAllowedList);
+  }
+
   updateList() {
-    // HTTP Post here to back end, send the variable updatedList
-    console.log(this.updatedList);
+    // HTTP POST here to update back end, send the variable updatedList split into array delimited by comma
+    console.log(this.updatedList.split(","));
+    let testReturnedList;
+    testReturnedList = this.http.get(this.updateBuslistURL + "?buslist=" + this.updatedList);
+    console.log(testReturnedList);
   }
 
 }
