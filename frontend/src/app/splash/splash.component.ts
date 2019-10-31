@@ -1,18 +1,23 @@
 import { Component, OnInit } from '@angular/core';
 import { Paho } from '../ng2-mqtt/mqttws31';
 import { DataService } from '../service/data.service';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-splash',
   templateUrl: './splash.component.html',
   styleUrls: ['./splash.component.css']
 })
+
 export class SplashComponent implements OnInit {
   client: any;
   name: string;
   nameList: string[] = [];
+  allowedList: string[] = [];
+  updatedList: string;
   clientDetails: any;
   showName: boolean = false;
+
 
   constructor(private dataService: DataService) { }
 
@@ -22,10 +27,11 @@ export class SplashComponent implements OnInit {
     }
     this.client = new Paho.MQTT.Client('broker.hivemq.com', Number(8000), '/mqtt', 'clientId-Qsff58vb4M');
     this.onMessage();
-
+    this.getAllowedList();
     this.onConnectionLost();
     this.client.connect({ onSuccess: this.onConnected.bind(this) });
   }
+
   onConnected() {
     console.log("Connected");
     this.client.subscribe("gotw/warn");
@@ -51,8 +57,8 @@ export class SplashComponent implements OnInit {
       this.name = this.clientDetails[data.uuid];
       console.log(this.name)
       if (!this.nameList.includes(this.name)) {
-        this.nameList.push(this.name)
-      } 
+        this.nameList.push(this.name);
+      }
       console.log('Message arrived : ' + message.payloadString);
 
       let logRequest = {
@@ -72,7 +78,23 @@ export class SplashComponent implements OnInit {
     this.client.onConnectionLost = (responseObject: Object) => {
       console.log('Connection lost : ' + JSON.stringify(responseObject));
     };
+  }
 
+  getAllowedList() {
+    this.dataService.getAllowedList().subscribe(res => {
+      console.log(Array.of(res));
+      this.allowedList = res;
+    }, error => {
+      console.log("getAllowedList failed. " + error)
+    });
+  }
+
+  updateList() {
+    this.dataService.updateAllowedList(this.updatedList).subscribe(res => {
+      this.allowedList = res;
+    }, error => {
+      console.log("getAllowedList failed. " + error)
+    });
   }
 
 }
