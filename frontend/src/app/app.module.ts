@@ -7,6 +7,7 @@ import { HeaderComponent } from './shared/header/header.component';
 import { SplashComponent } from './splash/splash.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { ClientComponent } from './client/client.component';
 
 
 @NgModule({
@@ -14,6 +15,7 @@ import { HttpClientModule } from '@angular/common/http';
     AppComponent,
     HeaderComponent,
     SplashComponent,
+    ClientComponent,
   ],
   imports: [
     BrowserModule,

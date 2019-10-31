@@ -3,6 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { environment } from '../../environments/environment'
 
+const flaskAPIKey = "5frdhhrhT6qORCT62U125F2p3HHUu0BYm3u5OrlQLUKCCS6JqjQTZaQnxTkseAL33KeLdItJf2CdGu9TFA9joFdgQe6vZ0Y0QRymldL6wv1Sr3hAra1ywhQMxdeOgZQk";
+
 @Injectable({
   providedIn: 'root'
 })
@@ -25,4 +27,7 @@ export class DataService {
     return this.httpClient.get(this.host + "setBuslist?buslist=" + req + this.apiKey);
   }
 
+  sendTelegram(message: string) {
+    return this.httpClient.get(this.host + "sendTeleMessage?message=" + message + this.apiKey);
+  }
 }

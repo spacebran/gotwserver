@@ -22,6 +22,8 @@ export class SplashComponent implements OnInit {
   constructor(private dataService: DataService) { }
 
   ngOnInit() {
+    this.sendTelegram("WATCH OUT!!! " + "Koh Pee Peng" + " is trying to escape.");
+
     this.clientDetails = {
       "F7826DA6-4FA2-4E98-8024-BC5B71E0893E": "Koh Pee Peng "
     }
@@ -30,6 +32,7 @@ export class SplashComponent implements OnInit {
     this.getAllowedList();
     this.onConnectionLost();
     this.client.connect({ onSuccess: this.onConnected.bind(this) });
+
   }
 
   onConnected() {
@@ -56,6 +59,9 @@ export class SplashComponent implements OnInit {
       let data: any = JSON.parse(message.payloadString);
       this.name = this.clientDetails[data.uuid];
       console.log(this.name)
+
+      this.sendTelegram("WATCH OUT!!! " + this.name + " is trying to escape.");
+
       if (!this.nameList.includes(this.name)) {
         this.nameList.push(this.name);
       }
@@ -66,6 +72,7 @@ export class SplashComponent implements OnInit {
         name: this.name,
         timestamp: Date.now()
       }
+
       this.dataService.logDownEscapee(logRequest).subscribe(success => {
         console.log("Successfully log to database")
       }, error => {
@@ -87,6 +94,10 @@ export class SplashComponent implements OnInit {
     }, error => {
       console.log("getAllowedList failed. " + error)
     });
+  sendTelegram(message: any) {
+    this.dataService.sendTelegram(message).subscribe((data: any) => {
+      console.log(data);
+    })
   }
 
   updateList() {
