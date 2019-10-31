@@ -1,0 +1,33 @@
+<div class="container">
+  <div class="card border-0 shadow my-5 text-center">
+    <div class="card-body p-4">
+      <h3 class="font-weight-bold text-center">
+        List of clients currently allowed to exit
+      </h3>
+      <hr />
+      <br>
+      <div *ngFor="let name of allowedList">
+        <h4>
+          {{ name.name }}
+        </h4>
+      </div>
+      <br>
+      <hr>
+      <br />
+      <h3 class="font-weight-bold text-center">Update list:</h3>
+      <br>
+      <div>
+        <input
+          type="text"
+          style="width: 500px"
+          [(ngModel)]="updatedList"
+          placeholder="Enter IDs, separate by comma"
+          class="user_id_text"
+        />
+        <br><br>
+        <button type="button" class="btn btn-warning" (click)="updateList()"><b>Submit</b></button>
+      </div>
+      <div style="height: 50px"></div>
+    </div>
+  </div>
+</div>
